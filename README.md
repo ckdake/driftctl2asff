@@ -1,8 +1,8 @@
 # driftctl2asff
 
-WIP!
+Converts driftctl json output to AWS Security Hub asff format.
 
-Converts driftctl json output to AWS Security Hub asff format
+This works, but you may want to customize it for your needs. PRs welcome.
 
 https://docs.driftctl.com/0.35.0/usage/cmd/scan-usage#structure-1
 https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-findings-format-syntax.html

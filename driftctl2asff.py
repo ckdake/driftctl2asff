@@ -20,7 +20,7 @@ finding_template = {
     "Description": "(boilerplate or specific)",
     "GeneratorId": "(rule/check/etc)",
     "Id": "(product-specific identifier)",
-    "ProductArn" : "arn:aws:securityub:"+finding_aws_region+":"+finding_aws_account+":product/driftctl/driftctl",
+    "ProductArn" : "arn:aws:securityhub:"+finding_aws_region+":"+finding_aws_account+":product/"+finding_aws_account+"/default",
     "Resources" : [],
     "SchemaVersion" : "2018-10-08",
     "Severity": {
