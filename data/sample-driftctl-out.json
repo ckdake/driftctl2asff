@@ -1,0 +1,58 @@
+{
+    "summary": {
+      "total_resources": 3,
+      "total_changed": 1,
+      "total_unmanaged": 1,
+      "total_missing": 1,
+      "total_managed": 1,
+      "total_iac_source_count": 1
+    },
+    "managed": [
+      {
+        "id": "driftctl-bucket-test-1",
+        "type": "aws_s3_bucket",
+        "source": { 
+          "source": "tfstate://terraform.tfstate", 
+          "namespace": "module",
+          "internal_name": "my_name" 
+        }
+      }
+    ],
+    "unmanaged": [
+      {
+        "id": "driftctl-bucket-test-3",
+        "type": "aws_s3_bucket"
+      }
+    ],
+    "missing": [
+      {
+        "id": "driftctl-bucket-test-2",
+        "type": "aws_s3_bucket"
+      }
+    ],
+    "differences": [
+      {
+        "res": {
+          "id": "driftctl-bucket-test-1",
+          "type": "aws_s3_bucket"
+        },
+        "changelog": [
+          {
+            "type": "update", 
+            "path": [
+              "Versioning",
+              "0",
+              "Enabled"
+            ],
+            "from": false,
+            "to": true
+          }
+        ]
+      }
+    ],
+    "coverage": 33,
+    "provider_name": "AWS",
+    "provider_version": "2.18.5",
+    "scan_duration": 27,
+    "date": "2022-04-08T10:35:00Z"
+  }
