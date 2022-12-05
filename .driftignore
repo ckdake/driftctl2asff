@@ -1,0 +1,5 @@
+# Sample! See https://docs.driftctl.com/next/usage/filtering/driftignore/ for explanation
+
+# Automatically created by AWS in every Organization Account
+
+aws_iam_role.OrganizationAccountAccessRole

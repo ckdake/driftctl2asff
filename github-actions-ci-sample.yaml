@@ -1,0 +1,57 @@
+name: Driftctl Image CI
+
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - 'path/to/driftctl/**'
+
+env:
+  AWS_REGION : "some-aws-region"
+  REGISTRY: "example.dkr.ecr.some-aws-region.amazonaws.com"
+  REPOSITORY: "org-name/driftctl"
+
+jobs:
+  build-and-push:
+    permissions:
+      id-token: write
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Configure and output fully qualified image name
+      run: |
+        echo
+        TAG="$(git rev-parse --short HEAD)-$(date +%s)"
+        FQN="${{ env.REGISTRY }}/${{ env.REPOSITORY }}:$TAG"
+        LATEST_FQN="${{ env.REGISTRY }}/${{ env.REPOSITORY }}:latest"
+
+        echo "IMAGE_FQN=$FQN" >> $GITHUB_ENV
+        echo "LATEST_FQN=$LATEST_FQN" >> $GITHUB_ENV
+        echo $FQN
+
+    - name: Retrieve aws credentials for ECR push
+      uses: aws-actions/configure-aws-credentials@v1-node16
+      with:
+        role-to-assume: arn:aws:iam::211451473810:role/github-OIDC
+        role-session-name: artifact-push-session
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: Login to ECR
+      uses: docker/login-action@v2.0.0
+      with:
+        registry: ${{ env.REGISTRY }}
+
+    - name: Push the Docker image
+      uses: docker/build-push-action@v3
+      with:
+        context: tools/driftctl
+        platforms: linux/amd64
+        file: tools/driftctl/Dockerfile
+        push: true
+        tags: |
+          "${{ env.IMAGE_FQN }}"
+          "${{ env.LATEST_FQN }}"
